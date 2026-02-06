@@ -209,6 +209,10 @@
         display: flex;
         align-items: flex-end;
         justify-content: center;
+        /* Let player sizes scale with the collage width so spacing stays proportional across slides. */
+        container-type: inline-size;
+        --back-player-h: 35cqw;      /* 420px @ 1200px */
+        --front-player-h: 23.333cqw; /* 280px @ 1200px */
       }
 
       .player {
@@ -251,14 +255,16 @@
         filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.4));
       }
 
-      .player.back img { height: 420px; }
-      .player.front img { height: 280px; }
+      .player.back img { height: var(--back-player-h); }
+      .player.front img { height: var(--front-player-h); }
 
       /* Mini preview (for slides 2-3) */
       .hero.is-mini { padding-bottom: 10px; }
+      .hero.is-mini .players {
+        --back-player-h: 17.5cqw;   /* 210px @ 1200px */
+        --front-player-h: 11.667cqw; /* 140px @ 1200px */
+      }
       .hero.is-mini .player { pointer-events: none; cursor: default; transition: none; }
-      .hero.is-mini .player.back img { height: 210px; }
-      .hero.is-mini .player.front img { height: 140px; }
 
       /* Large preview panel (for slide 2) */
       .hero.is-panel {
@@ -297,8 +303,6 @@
 
       @media (max-width: 768px) {
         .hero { aspect-ratio: 16/10; }
-        .player.back img { height: 290px; }
-        .player.front img { height: 200px; }
       }
 
       .nav {
