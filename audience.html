@@ -407,12 +407,9 @@
 
               <h3 style="margin-top:16px;">Why Positioning Matters</h3>
               <ul class="bullets">
-                <li><strong>static</strong>: default flow; you cannot reliably overlap layers.</li>
-                <li><strong>relative</strong>: stays in flow, but becomes an anchor for absolutely positioned children.</li>
-                <li><strong>absolute</strong>: removed from flow; perfect for precise placement and overlap.</li>
-                <li><strong>fixed</strong>: positioned relative to the viewport (useful for nav/overlays).</li>
-                <li><strong>sticky</strong>: scroll-based behavior (hybrid of relative + fixed).</li>
-                <li><strong>z-index</strong>: controls the stack order, typically on positioned elements.</li>
+                <li><strong>Overlap control</strong>: absolute positioning makes layering predictable.</li>
+                <li><strong>Stable anchor</strong>: a relative wrapper defines the coordinate system.</li>
+                <li><strong>Front/back</strong>: <code>z-index</code> keeps sitting players in front.</li>
               </ul>
             </div>
             <div class="card">
@@ -422,118 +419,13 @@
 .player { position: absolute; bottom: 0; }
 
 /* sitting players in front */
-.player.front:nth-child(9) { z-index: 7; }</code></pre>
-              <p class="note" style="margin-top:10px;">In my project this idea is used in <code>pages/teams.html</code>.</p>
+  .player.front:nth-child(9) { z-index: 7; }</code></pre>
             </div>
           </div>
         </div>
       </section>
 
-      <section class="slide" data-title="HTML" aria-label="Slide 3: HTML">
-        <div class="stage pad">
-          <div class="header">
-            <h2>HTML Structure: One Background, Many PNG Layers</h2>
-            <div class="meta">separate images</div>
-          </div>
-          <div class="cols">
-            <div class="card">
-              <h3>Structure</h3>
-              <p>All players live inside one wrapper on top of a single background image.</p>
-              <pre><code>&lt;div class=&quot;hero&quot;&gt;
-  &lt;div class=&quot;players&quot;&gt;
-    &lt;!-- standing (back row) --&gt;
-    &lt;div class=&quot;player back&quot;&gt;...&lt;/div&gt;
-    ...
-    &lt;!-- sitting (front row) --&gt;
-    &lt;div class=&quot;player front&quot;&gt;...&lt;/div&gt;
-  &lt;/div&gt;
-&lt;/div&gt;</code></pre>
-              <p class="note">Note: the order matters because positions use <code>nth-child</code>.</p>
-            </div>
-            <div class="card">
-              <h3>Why Separate PNGs?</h3>
-              <ul class="bullets">
-                <li>Independent hover/focus per player.</li>
-                <li>Easy to change the front/back order using <code>z-index</code>.</li>
-                <li>Flexible: swap one player image without exporting a new combined team photo.</li>
-              </ul>
-              <p class="note" style="margin-top:10px;"><span class="tag">Tradeoff</span> More CSS tuning (positions, sizes) than a single combined image.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="slide" data-title="CSS" aria-label="Slide 4: CSS">
-        <div class="stage pad">
-          <div class="header">
-            <h2>CSS Positioning: Relative Parent, Absolute Children</h2>
-            <div class="meta">precision layout</div>
-          </div>
-          <div class="cols">
-            <div class="card">
-              <h3>Core Rules</h3>
-              <pre><code>.players {
-  position: relative;
-  height: 100%;
-}
-
-.player {
-  position: absolute;
-  bottom: 0;
-}</code></pre>
-              <ul class="bullets">
-                <li><strong>relative</strong> creates the coordinate system.</li>
-                <li><strong>absolute</strong> lets you overlap and fine-tune spacing.</li>
-                <li><strong>bottom: 0</strong> aligns feet to the ground.</li>
-              </ul>
-            </div>
-            <div class="card">
-              <h3>Placement (Example)</h3>
-              <pre><code>/* standing row */
-.player.back:nth-child(1) { left: 23%; z-index: 2; }
-.player.back:nth-child(3) {
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 4;
-}
-.player.back:nth-child(5) { right: 23%; z-index: 2; }</code></pre>
-              <p class="note">This is quick to build when the number of players is fixed.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="slide" data-title="Layering" aria-label="Slide 5: Layering">
-        <div class="stage pad">
-          <div class="header">
-            <h2>Layering: z-index, Shadows, Depth</h2>
-            <div class="meta">front vs back</div>
-          </div>
-          <div class="cols">
-            <div class="card">
-              <h3>Front Row vs Back Row</h3>
-              <p>Sitting players must appear in front of standing players.</p>
-              <pre><code>/* sitting (front row) */
-.player.front:nth-child(6) { left: 28%; z-index: 5; }
-.player.front:nth-child(9) { right: 28%; z-index: 7; }</code></pre>
-              <p class="note"><span class="tag">Why</span> Higher <code>z-index</code> means the image is drawn above other layers.</p>
-            </div>
-            <div class="card">
-              <h3>Depth + Focus</h3>
-              <ul class="bullets">
-                <li>Ground shadow using <code>::after</code> to make players feel anchored.</li>
-                <li><code>filter: drop-shadow(...)</code> to separate players from the background.</li>
-                <li>Hover transform to guide attention without moving the entire layout.</li>
-              </ul>
-              <pre><code>.player.back::after { background: radial-gradient(...); }
-.player img { filter: drop-shadow(0 8px 16px rgba(0,0,0,.4)); }
-.player:hover { transform: rotateY(8deg) scale(1.03); }</code></pre>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="slide" data-title="Q&A" aria-label="Slide 6: Q and A">
+      <section class="slide" data-title="Q&A" aria-label="Slide 3: Q and A">
         <div class="stage pad">
           <div class="header">
             <h2>Wrap-up + Question</h2>
@@ -547,18 +439,11 @@
                 <li><code>position: relative</code> + <code>position: absolute</code> gives precise control.</li>
                 <li><code>z-index</code> is the simplest way to control front/back.</li>
               </ul>
-              <p class="note" style="margin-top:10px;">Artifact: Slide 1. Code reference: <code>pages/teams.html</code>.</p>
+              <p class="note" style="margin-top:10px;">Artifact: Slide 1.</p>
             </div>
             <div class="card">
               <h3>Question for You</h3>
               <p>Would you prefer keeping the layout with manual <code>nth-child</code> rules, or switching to a data-driven approach (e.g. CSS variables per player) so it scales to any number of players?</p>
-              <pre><code>&lt;div class=&quot;player&quot; style=&quot;--x: 28%; --z: 7;&quot;&gt;...&lt;/div&gt;
-
-.player {
-  left: var(--x);
-  z-index: var(--z);
-  position: absolute;
-}</code></pre>
             </div>
           </div>
         </div>
