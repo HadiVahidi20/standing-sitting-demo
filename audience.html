@@ -251,6 +251,12 @@
       .player.back img { height: 420px; }
       .player.front img { height: 280px; }
 
+      /* Mini preview (for slides 2-3) */
+      .hero.is-mini { padding-bottom: 10px; }
+      .hero.is-mini .player { pointer-events: none; cursor: default; transition: none; }
+      .hero.is-mini .player.back img { height: 210px; }
+      .hero.is-mini .player.front img { height: 140px; }
+
       /* placement */
       .player.back:nth-child(1) { left: 23%; z-index: 2; }
       .player.back:nth-child(2) { left: 33%; z-index: 3; }
@@ -416,10 +422,25 @@
               <h3>Key Idea (1 sentence)</h3>
               <p><strong>Use a relative container + absolute players + z-index</strong> to control overlap like a layered collage.</p>
               <pre><code>.players { position: relative; }
-.player { position: absolute; bottom: 0; }
+ .player { position: absolute; bottom: 0; }
 
-/* sitting players in front */
-  .player.front:nth-child(9) { z-index: 7; }</code></pre>
+ /* sitting players in front */
+ .player.front:nth-child(9) { z-index: 7; }</code></pre>
+              <p class="note" style="margin-top:10px;"><span class="tag">Preview</span> Same artifact, smaller.</p>
+              <div class="hero is-mini" aria-hidden="true" style="margin-top:10px;">
+                <div class="players">
+                  <div class="player back"><img src="./sl1.png" alt="" /></div>
+                  <div class="player back"><img src="./sl2.png" alt="" /></div>
+                  <div class="player back"><img src="./sl3.png" alt="" /></div>
+                  <div class="player back"><img src="./sl4.png" alt="" /></div>
+                  <div class="player back"><img src="./sl5.png" alt="" /></div>
+
+                  <div class="player front"><img src="./sitted1.png" alt="" /></div>
+                  <div class="player front"><img src="./sitted2.png" alt="" /></div>
+                  <div class="player front"><img src="./sitted3.png" alt="" /></div>
+                  <div class="player front"><img src="./sitted4.png" alt="" /></div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -439,7 +460,21 @@
                 <li><code>position: relative</code> + <code>position: absolute</code> gives precise control.</li>
                 <li><code>z-index</code> is the simplest way to control front/back.</li>
               </ul>
-              <p class="note" style="margin-top:10px;">Artifact: Slide 1.</p>
+              <p class="note" style="margin-top:10px;"><span class="tag">Artifact</span> Quick preview:</p>
+              <div class="hero is-mini" aria-hidden="true" style="margin-top:10px;">
+                <div class="players">
+                  <div class="player back"><img src="./sl1.png" alt="" /></div>
+                  <div class="player back"><img src="./sl2.png" alt="" /></div>
+                  <div class="player back"><img src="./sl3.png" alt="" /></div>
+                  <div class="player back"><img src="./sl4.png" alt="" /></div>
+                  <div class="player back"><img src="./sl5.png" alt="" /></div>
+
+                  <div class="player front"><img src="./sitted1.png" alt="" /></div>
+                  <div class="player front"><img src="./sitted2.png" alt="" /></div>
+                  <div class="player front"><img src="./sitted3.png" alt="" /></div>
+                  <div class="player front"><img src="./sitted4.png" alt="" /></div>
+                </div>
+              </div>
             </div>
             <div class="card">
               <h3>Question for You</h3>
