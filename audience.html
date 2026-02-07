@@ -122,11 +122,37 @@
       }
 
       .cols.is-photo-focus { grid-template-columns: 0.9fr 1.1fr; }
+      .cols.is-auto { height: auto; }
+
+      .stack {
+        height: calc(100% - 60px);
+        display: grid;
+        grid-template-rows: 1fr auto;
+        gap: 14px;
+      }
+
+      .footer-art {
+        margin: 0;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        background: rgba(0, 0, 0, 0.16);
+        border-radius: 18px;
+        overflow: hidden;
+        height: clamp(110px, 18vh, 160px);
+      }
+
+      .footer-art img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
 
       @media (max-width: 980px) {
         .stage { height: 100%; border-radius: 16px; }
         .cols { grid-template-columns: 1fr; height: auto; }
         .cols.is-photo-focus { grid-template-columns: 1fr; height: auto; }
+        .stack { height: auto; }
+        .footer-art { height: 140px; }
       }
 
       .card {
@@ -595,25 +621,29 @@
             <h2>Wrap-up + Question</h2>
             <div class="meta">feedback</div>
           </div>
-          <div class="cols">
-            <div class="card">
-              <h3>Key Takeaways</h3>
-              <ul class="bullets">
-                <li>Transparent PNGs let you treat each player as a layer.</li>
-                <li><code>position: relative</code> + <code>position: absolute</code> gives precise control.</li>
-                <li><code>z-index</code> is the simplest way to control front/back.</li>
-              </ul>
-              <div style="margin-top:10px; display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
-                <span class="tag">Artifact</span>
-                <a class="btn" href="./photo.html" download="standing-sitting-photo.html" aria-label="Download the photo page (HTML)">
-                  Download photo page
-                </a>
+          <div class="stack">
+            <div class="cols is-auto">
+              <div class="card">
+                <h3>Key Takeaways</h3>
+                <ul class="bullets">
+                  <li>Transparent PNGs = independent layers.</li>
+                  <li>Relative + absolute + z-index = controlled overlap.</li>
+                </ul>
+                <div style="margin-top:10px; display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+                  <span class="tag">Artifact</span>
+                  <a class="btn" href="./photo.html" download="standing-sitting-photo.html" aria-label="Download the photo page (HTML)">
+                    Download artifact
+                  </a>
+                </div>
+              </div>
+              <div class="card">
+                <h3>Question for You</h3>
+                <p>What is the best way to keep this scalable and quick to maintain for many players: manual <code>nth-child</code> rules, or a data-driven approach using CSS variables per player (e.g. <code>--x</code>, <code>--z</code>)?</p>
               </div>
             </div>
-            <div class="card">
-              <h3>Question for You</h3>
-              <p>Would you prefer keeping the layout with manual <code>nth-child</code> rules, or switching to a data-driven approach (e.g. CSS variables per player) so it scales to any number of players?</p>
-            </div>
+            <figure class="footer-art" aria-label="Hero background screenshot">
+              <img src="./Teams-Page_heroSection_bg.JPG" alt="Screenshot of the hero section background" loading="lazy" decoding="async" />
+            </figure>
           </div>
         </div>
       </section>
