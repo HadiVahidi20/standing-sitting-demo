@@ -127,7 +127,8 @@
       .stack {
         height: calc(100% - 60px);
         display: grid;
-        grid-template-rows: 1fr auto;
+        /* Let text take only its content height so the remaining space goes to the image. */
+        grid-template-rows: auto 1fr;
         gap: 14px;
       }
 
@@ -137,7 +138,8 @@
         background: rgba(0, 0, 0, 0.16);
         border-radius: 18px;
         overflow: hidden;
-        height: clamp(110px, 18vh, 160px);
+        /* Fill remaining slide height. */
+        min-height: 220px;
       }
 
       .footer-art img {
