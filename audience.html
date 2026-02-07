@@ -524,22 +524,45 @@
           <div class="cols">
             <div class="card" data-code-demo="hero">
               <h3>HTML (pick a class)</h3>
-              <p><strong>Use a relative container + absolute players + z-index</strong> to control overlap like a layered collage.</p>
               <p class="note">Click a class name below. The matching CSS rule will highlight on the right.</p>
               <pre><code>&lt;div class=&quot;hero&quot;&gt;
-  &lt;div class=&quot;<span class="pick is-active" role="button" tabindex="0" data-key="players">players</span>&quot;&gt;
-    &lt;div class=&quot;<span class="pick" role="button" tabindex="0" data-key="player">player</span> back&quot;&gt;...&lt;/div&gt;
-    &lt;div class=&quot;<span class="pick" role="button" tabindex="0" data-key="front">player front</span>&quot;&gt;...&lt;/div&gt;
+  &lt;div class=&quot;<span class="pick" role="button" tabindex="0" data-key="hero">hero</span>&quot;&gt;
+    &lt;div class=&quot;<span class="pick is-active" role="button" tabindex="0" data-key="players">players</span>&quot;&gt;
+      &lt;!-- standing (back row) --&gt;
+      &lt;div class=&quot;<span class="pick" role="button" tabindex="0" data-key="player">player</span> <span class="pick" role="button" tabindex="0" data-key="back">back</span>&quot;&gt;
+        &lt;img src=&quot;./sl3.png&quot; alt=&quot;Standing player&quot; /&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;<span class="pick" role="button" tabindex="0" data-key="player">player</span> <span class="pick" role="button" tabindex="0" data-key="back">back</span>&quot;&gt;
+        &lt;img src=&quot;./sl4.png&quot; alt=&quot;Standing player&quot; /&gt;
+      &lt;/div&gt;
+
+      &lt;!-- sitting (front row) --&gt;
+      &lt;div class=&quot;<span class="pick" role="button" tabindex="0" data-key="player">player</span> <span class="pick" role="button" tabindex="0" data-key="front">front</span>&quot;&gt;
+        &lt;img src=&quot;./sitted3.png&quot; alt=&quot;Sitting player&quot; /&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;<span class="pick" role="button" tabindex="0" data-key="player">player</span> <span class="pick" role="button" tabindex="0" data-key="front">front</span>&quot;&gt;
+        &lt;img src=&quot;./sitted4.png&quot; alt=&quot;Sitting player&quot; /&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
   &lt;/div&gt;
 &lt;/div&gt;</code></pre>
+              <div class="hint" data-hint="hero"><strong>hero</strong> = background + stage</div>
               <div class="hint is-active" data-hint="players"><strong>relative</strong> = anchor (coordinates)</div>
               <div class="hint" data-hint="player"><strong>absolute</strong> = precise overlap</div>
-              <div class="hint" data-hint="front"><strong>z-index</strong> = front/back</div>
+              <div class="hint" data-hint="back"><strong>back</strong> = back row placement (lower z-index)</div>
+              <div class="hint" data-hint="front"><strong>z-index</strong> = front/back (front row on top)</div>
             </div>
             <div class="card">
               <h3>CSS (highlights)</h3>
-              <pre><code><span class="css-rule is-active" data-rule="players">.players {
+              <pre><code><span class="css-rule" data-rule="hero">.hero {
+  background-image: url('./Team_bg.png');
+  background-size: cover;
+  background-position: center;
+}</span>
+
+<span class="css-rule is-active" data-rule="players">.players {
   position: relative;
+  height: 100%;
 }</span>
 
 <span class="css-rule" data-rule="player">.player {
@@ -547,8 +570,16 @@
   bottom: 0;
 }</span>
 
+<span class="css-rule" data-rule="back">/* back row placement */
+.player.back:nth-child(3) {
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 4;
+}</span>
+
 <span class="css-rule" data-rule="front">/* sitting players in front */
 .player.front:nth-child(9) {
+  right: 28%;
   z-index: 7;
 }</span></code></pre>
             </div>
@@ -726,8 +757,9 @@
           var demo = document.querySelector('[data-code-demo]');
           if (!demo) return;
 
+          var slide = demo.closest('.slide') || document;
           var picks = Array.prototype.slice.call(demo.querySelectorAll('.pick'));
-          var cssRules = Array.prototype.slice.call(document.querySelectorAll('[data-rule]'));
+          var cssRules = Array.prototype.slice.call(slide.querySelectorAll('[data-rule]'));
           var hints = Array.prototype.slice.call(demo.querySelectorAll('[data-hint]'));
 
           function setActive(key) {
